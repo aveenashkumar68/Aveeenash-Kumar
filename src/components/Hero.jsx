@@ -122,7 +122,7 @@ export default function Hero() {
             View Projects
           </a>
           <a
-            href="/Aveenash_Kumar_Resume.pdf"
+            href="/avee_cse.pdf"
             download
             className="group px-8 py-3.5 rounded-full border border-glass-border bg-glass text-white font-medium
                        hover:border-neon-cyan/50 hover:bg-glass-hover transition-all duration-300 hover:scale-105 flex items-center gap-2"
