@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FiGithub, FiExternalLink, FiFolder } from 'react-icons/fi'
@@ -9,8 +9,8 @@ const projects = [
     description:
       'A full-stack MERN marketplace exclusive to college students. Features college-based authentication, real-time image uploads from camera/gallery, optimized MongoDB aggregation pipelines, and a seamless buying/selling experience.',
     tech: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Multer'],
-    github: 'https://github.com/aveenashkumar68',
-    live: '#',
+    github: 'https://github.com/aveenashkumar68/College-Market-Place',
+    live: 'https://college-market-place.vercel.app/',
     highlights: [
       'College-based authentication system',
       'Camera/gallery image upload',
@@ -24,8 +24,8 @@ const projects = [
     description:
       'A clean, secure todo and notes application with JWT authentication, user-specific data isolation, and a responsive interface. Built with RESTful APIs using Express.js and deployed for production.',
     tech: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Vercel'],
-    github: 'https://github.com/aveenashkumar68',
-    live: '#',
+    github: 'https://github.com/aveenashkumar68/Note-App',
+    live: 'https://note-app-gamma-two.vercel.app',
     highlights: [
       'JWT-based authentication',
       'User-specific todos',
@@ -39,8 +39,8 @@ const projects = [
     description:
       'Role-Based Consultancy Management System with controlled onboarding and workflow management. Implemented structured reporting and centralized data management to streamline consultancy operations.',
     tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
-    github: '#',
-    live: '#',
+    github: 'https://github.com/aveenashkumar68/academia-connect',
+    live: 'https://academia-connect-three.vercel.app/',
     highlights: [
       'Role-based access (Super Admin, Admin, Experts)',
       'Workflows for assigning experts',
@@ -52,45 +52,23 @@ const projects = [
 ]
 
 function ProjectCard({ project, index }) {
-  const cardRef = useRef(null)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-    setTilt({
-      x: ((y - centerY) / centerY) * -8,
-      y: ((x - centerX) / centerX) * 8,
-    })
-  }
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 })
-    setIsHovered(false)
-  }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ delay: index * 0.15, duration: 0.7 }}
-      className="tilt-card"
+      transition={{ delay: index * 0.12, duration: 0.5 }}
     >
       <div
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={() => setIsHovered(false)}
         className="glass-card overflow-hidden group relative"
         style={{
-          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${isHovered ? 1.02 : 1})`,
-          transition: 'transform 0.2s ease',
+          transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+          boxShadow: isHovered ? '0 8px 30px rgba(0,0,0,0.3)' : 'none',
         }}
       >
         {/* Top gradient bar */}
@@ -107,12 +85,12 @@ function ProjectCard({ project, index }) {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple/20 to-neon-cyan/20 flex items-center justify-center">
               <FiFolder className="text-neon-cyan" size={22} />
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 relative z-10">
               <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-neon-cyan transition-colors p-1"
+                className="text-gray-400 hover:text-neon-cyan transition-colors p-2 rounded-lg hover:bg-white/5"
                 aria-label={`${project.title} GitHub`}
               >
                 <FiGithub size={20} />
@@ -121,7 +99,7 @@ function ProjectCard({ project, index }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-neon-cyan transition-colors p-1"
+                className="text-gray-400 hover:text-neon-cyan transition-colors p-2 rounded-lg hover:bg-white/5"
                 aria-label={`${project.title} Live Demo`}
               >
                 <FiExternalLink size={20} />
@@ -161,7 +139,7 @@ function ProjectCard({ project, index }) {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 relative z-10">
             <a
               href={project.live}
               target="_blank"
