@@ -1,47 +1,26 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FiGithub, FiGitCommit, FiStar, FiGitPullRequest } from 'react-icons/fi'
-
-const stats = [
-  { icon: FiGithub, label: 'Repositories', value: '15+', color: 'text-neon-cyan' },
-  { icon: FiGitCommit, label: 'Commits', value: '500+', color: 'text-neon-purple' },
-  { icon: FiStar, label: 'Stars Earned', value: '10+', color: 'text-yellow-400' },
-  { icon: FiGitPullRequest, label: 'Pull Requests', value: '25+', color: 'text-neon-pink' },
-]
-
-// Generate mock contribution data
-const generateContributions = () => {
-  const weeks = 52
-  const days = 7
-  const data = []
-  for (let w = 0; w < weeks; w++) {
-    const week = []
-    for (let d = 0; d < days; d++) {
-      const rand = Math.random()
-      let level = 0
-      if (rand > 0.6) level = 1
-      if (rand > 0.75) level = 2
-      if (rand > 0.88) level = 3
-      if (rand > 0.95) level = 4
-      week.push(level)
-    }
-    data.push(week)
-  }
-  return data
-}
-
-const contributions = generateContributions()
-
-const levelColors = [
-  'bg-dark-500',
-  'bg-emerald-900/60',
-  'bg-emerald-700/60',
-  'bg-emerald-500/60',
-  'bg-emerald-400/80',
-]
+import { FiGithub, FiUsers, FiBook, FiCode } from 'react-icons/fi'
+import GitHubCalendar from 'react-github-calendar'
 
 export default function GitHubStats() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [githubData, setGithubData] = useState(null)
+
+  useEffect(() => {
+    fetch('https://api.github.com/users/aveenashkumar68')
+      .then(res => res.json())
+      .then(data => setGithubData(data))
+      .catch(err => console.error("Error fetching GitHub data:", err))
+  }, [])
+
+  const stats = [
+    { icon: FiBook, label: 'Public Repos', value: githubData?.public_repos || '-', color: 'text-neon-cyan' },
+    { icon: FiUsers, label: 'Followers', value: githubData?.followers || '-', color: 'text-neon-purple' },
+    { icon: FiGithub, label: 'Following', value: githubData?.following || '-', color: 'text-yellow-400' },
+    { icon: FiCode, label: 'Public Gists', value: githubData?.public_gists || '-', color: 'text-neon-pink' },
+  ]
 
   return (
     <section className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8" ref={ref}>
@@ -57,7 +36,7 @@ export default function GitHubStats() {
             GitHub <span className="gradient-text">Activity</span>
           </h2>
           <p className="section-subtitle">
-            A snapshot of my coding journey
+            A real-time snapshot of my coding journey
           </p>
         </motion.div>
 
@@ -84,37 +63,26 @@ export default function GitHubStats() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5, duration: 0.7 }}
-          className="glass-card p-6 lg:p-8 overflow-x-auto"
+          className="glass-card p-6 lg:p-8 overflow-x-auto flex flex-col items-center justify-center"
         >
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-6 w-full justify-start">
             <FiGithub className="text-gray-400" size={18} />
-            <span className="text-sm text-gray-400 font-medium">Contribution Graph</span>
+            <span className="text-sm text-gray-400 font-medium">Real-time Contribution Graph</span>
           </div>
 
-          <div className="flex gap-[3px] min-w-[680px]">
-            {contributions.map((week, wi) => (
-              <div key={wi} className="flex flex-col gap-[3px]">
-                {week.map((level, di) => (
-                  <motion.div
-                    key={`${wi}-${di}`}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={inView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ delay: wi * 0.01 + di * 0.01 + 0.6, duration: 0.2 }}
-                    className={`w-[11px] h-[11px] rounded-[2px] ${levelColors[level]} hover:ring-1 hover:ring-white/30 transition-all cursor-pointer`}
-                    title={`Level: ${level}`}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-
-          {/* Legend */}
-          <div className="flex items-center justify-end gap-2 mt-4 text-xs text-gray-500">
-            <span>Less</span>
-            {levelColors.map((c, i) => (
-              <div key={i} className={`w-[11px] h-[11px] rounded-[2px] ${c}`} />
-            ))}
-            <span>More</span>
+          <div className="w-full overflow-x-auto pb-4 flex justify-center text-gray-300">
+            {inView && (
+              <GitHubCalendar
+                username="aveenashkumar68"
+                colorScheme="dark"
+                blockSize={14}
+                blockMargin={4}
+                fontSize={14}
+                theme={{
+                  dark: ['#1e1e2e', '#047857', '#059669', '#10b981', '#34d399']
+                }}
+              />
+            )}
           </div>
         </motion.div>
       </div>
