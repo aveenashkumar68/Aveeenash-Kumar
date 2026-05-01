@@ -25,7 +25,7 @@ const projects = [
       'A clean, secure todo and notes application with JWT authentication, user-specific data isolation, and a responsive interface. Built with RESTful APIs using Express.js and deployed for production.',
     tech: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'Vercel'],
     github: 'https://github.com/aveenashkumar68/Note-App',
-    live: 'https://note-app-gamma-two.vercel.app',
+    live: 'https://note-app-gamma-two.vercel.app/',
     highlights: [
       'JWT-based authentication',
       'User-specific todos',
@@ -52,34 +52,21 @@ const projects = [
 ]
 
 function ProjectCard({ project, index }) {
-  const [isHovered, setIsHovered] = useState(false)
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ delay: index * 0.12, duration: 0.5 }}
+      className="glass-card overflow-hidden group relative hover:-translate-y-1 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)]"
     >
-      <div
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="glass-card overflow-hidden group relative"
-        style={{
-          transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-          boxShadow: isHovered ? '0 8px 30px rgba(0,0,0,0.3)' : 'none',
-        }}
-      >
-        {/* Top gradient bar */}
-        <div className={`h-1 bg-gradient-to-r ${project.color}`} />
+      {/* Top gradient bar */}
+      <div className={`h-1 bg-gradient-to-r ${project.color}`} />
 
-        {/* Hover glow */}
-        {isHovered && (
-          <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-5 pointer-events-none`} />
-        )}
+      {/* Hover glow */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
 
-        <div className="p-6 lg:p-8">
+      <div className="p-6 lg:p-8 relative z-10">
           {/* Header */}
           <div className="flex items-start justify-between mb-4">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple/20 to-neon-cyan/20 flex items-center justify-center">
@@ -139,13 +126,13 @@ function ProjectCard({ project, index }) {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3 relative z-10">
+          <div className="flex gap-3 relative z-20">
             <a
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 py-2.5 rounded-lg bg-gradient-to-r from-neon-purple to-neon-cyan text-white text-sm font-medium text-center
-                         hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                         hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer"
             >
               <FiExternalLink size={14} /> Live Demo
             </a>
@@ -154,13 +141,12 @@ function ProjectCard({ project, index }) {
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 py-2.5 rounded-lg border border-glass-border bg-glass text-white text-sm font-medium text-center
-                         hover:border-neon-cyan/50 transition-colors flex items-center justify-center gap-2"
+                         hover:border-neon-cyan/50 transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <FiGithub size={14} /> GitHub
             </a>
           </div>
         </div>
-      </div>
     </motion.div>
   )
 }
@@ -170,10 +156,10 @@ export default function Projects() {
 
   return (
     <section id="projects" className="relative py-24 lg:py-32 px-4 sm:px-6 lg:px-8" ref={ref}>
-      <div className="absolute top-0 left-0 w-96 h-96 bg-neon-blue/5 rounded-full blur-[150px]" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-neon-purple/5 rounded-full blur-[150px]" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-neon-blue/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-neon-purple/5 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
