@@ -34,6 +34,21 @@ const projects = [
     ],
     color: 'from-neon-cyan to-neon-blue',
   },
+  {
+    title: 'Project Mayaa',
+    description:
+      'Role-Based Consultancy Management System with controlled onboarding and workflow management. Implemented structured reporting and centralized data management to streamline consultancy operations.',
+    tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
+    github: '#',
+    live: '#',
+    highlights: [
+      'Role-based access (Super Admin, Admin, Experts)',
+      'Workflows for assigning experts',
+      'Structured reporting',
+      'Centralized data management',
+    ],
+    color: 'from-neon-purple to-neon-pink',
+  },
 ]
 
 function ProjectCard({ project, index }) {
