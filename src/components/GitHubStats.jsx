@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FiGithub, FiUsers, FiBook, FiCode } from 'react-icons/fi'
-import GitHubCalendar from 'react-github-calendar'
+import { GitHubCalendar } from 'react-github-calendar'
 
 export default function GitHubStats() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })

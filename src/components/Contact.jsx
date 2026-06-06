@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FiMail, FiMapPin, FiSend, FiGithub, FiLinkedin, FiPhone } from 'react-icons/fi'
+import { FiMail, FiMapPin, FiSend, FiGithub, FiLinkedin } from 'react-icons/fi'
 
 const contactInfo = [
   { icon: FiMail, label: 'Email', value: 'aveenashkumar68@gmail.com', href: 'mailto:aveenashkumar68@gmail.com' },

@@ -264,3 +264,19 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
+
+/* ====== INFINITE MARQUEE ANIMATION ====== */
+@keyframes marquee-left-to-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-lr {
+  display: flex;
+  width: max-content;
+  animation: marquee-left-to-right 25s linear infinite;
+}
+
+.animate-marquee-lr:hover {
+  animation-play-state: paused;
+}

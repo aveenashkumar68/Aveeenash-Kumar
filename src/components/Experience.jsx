@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { FiBriefcase, FiCalendar, FiMapPin } from 'react-icons/fi'
+import { FiCalendar, FiMapPin } from 'react-icons/fi'
 
 const experiences = [
   {

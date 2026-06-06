@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FiGithub, FiExternalLink, FiFolder } from 'react-icons/fi'
@@ -48,6 +47,21 @@ const projects = [
       'Centralized data management',
     ],
     color: 'from-neon-purple to-neon-pink',
+  },
+  {
+    title: 'DSA-GPT',
+    description:
+      'An AI-powered conversational assistant custom-tailored for Data Structures & Algorithms (DSA). Features structured prompt engineering, real-time code analysis, and learning paths optimized for students.',
+    tech: ['Node.js', 'Express', 'Google Gemini API', 'React', 'Tailwind CSS'],
+    github: 'https://github.com/aveenashkumar68/DSA-GPT',
+    live: 'https://dsa-gpt-72n1.onrender.com',
+    highlights: [
+      'DSA-focused tutoring agent',
+      'Google Gemini API Integration',
+      'Structured pedagogical prompts',
+      'Interactive coding answers',
+    ],
+    color: 'from-neon-cyan to-neon-purple',
   },
 ]
 
