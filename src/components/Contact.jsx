@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { FiMail, FiMapPin, FiSend, FiGithub, FiLinkedin } from 'react-icons/fi'
+import emailjs from '@emailjs/browser'
 
 const contactInfo = [
   { icon: FiMail, label: 'Email', value: 'aveenashkumar68@gmail.com', href: 'mailto:aveenashkumar68@gmail.com' },
@@ -27,12 +28,30 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    setIsSubmitting(false)
-    setSubmitted(true)
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    setTimeout(() => setSubmitted(false), 4000)
+    
+    try {
+      const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      };
+
+      await emailjs.send(serviceID, templateID, templateParams, publicKey);
+
+      setSubmitted(true)
+      setFormData({ name: '', email: '', subject: '', message: '' })
+      setTimeout(() => setSubmitted(false), 4000)
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('An error occurred while sending the message. Please check your EmailJS setup.');
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
